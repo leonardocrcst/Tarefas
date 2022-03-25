@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TarefasController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::resource("/tarefas", TarefasController::class);
+Route::controller(UserController::class)->group(function () {
+    $url = "/usuarios";
+    Route::post($url, "store");
+    Route::get($url, "show");
+    Route::put($url, "update");
+    Route::delete($url, "destroy");
 });
